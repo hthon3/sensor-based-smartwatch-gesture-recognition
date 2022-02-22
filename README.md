@@ -7,7 +7,7 @@ The application is operated on an Android Wear smartwatch with a microphone and 
 
 ## Dataset Download
 The raw dataset can be downloaded from [here](https://portland-my.sharepoint.com/:f:/g/personal/hthon3-c_my_cityu_edu_hk/En6m7fdbKKtBnHskqa4XYOYBfNA4w_E_HWUvbfoRtThLmg?e=afFv0Z).
-The entire `dataset` folder needed to be placed inside the `Model` folder.
+The entire `dataset` folder need to be placed inside the `Model` folder.
 
 ## Application Instances
 This project built different real-life applications around our classification system for smartwatch control.
