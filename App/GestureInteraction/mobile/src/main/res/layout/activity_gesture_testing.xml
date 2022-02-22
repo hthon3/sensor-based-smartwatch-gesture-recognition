@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GestureTesting">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50sp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Gesture Detection Result"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:background="#D3D3D3"/>
+
+        <TextView
+            android:id="@+id/textView_Result"
+            android:layout_width="match_parent"
+            android:layout_height="30sp"
+            android:layout_marginVertical="10sp"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:text="No Gesture Detected"/>
+        <TextView
+            android:id="@+id/textView_Rate"
+            android:layout_width="match_parent"
+            android:layout_height="30sp"
+            android:layout_marginVertical="10sp"
+            android:layout_gravity="center"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50sp"
+            android:layout_marginVertical="10sp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Received Data"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:background="#D3D3D3"/>
+
+            <TableLayout
+                android:id="@+id/tableLayout_Data"
+                android:layout_width="match_parent"
+                android:layout_height="320sp"
+                android:layout_marginHorizontal="10sp"
+                android:stretchColumns="*">
+                <TableRow
+                    android:id="@+id/tableLayout_Accel_Header"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:background="#D3D3D3">
+                    <TextView
+                        android:id="@+id/textView_Accel_Header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Linear Acceleration Data Preview" />
+                </TableRow>
+                <TableRow
+                    android:id="@+id/tableLayout_Accel_Graph"
+                    android:layout_weight="70"
+                    android:layout_width="match_parent">
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/chart_Accel_Graph"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    </com.github.mikephil.charting.charts.LineChart>
+                </TableRow>
+                <TableRow
+                    android:id="@+id/tableLayout_Gyro_Header"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:background="#D3D3D3">
+
+                    <TextView
+                        android:id="@+id/textView_Gyro_Header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Gyroscope Data Preview" />
+                </TableRow>
+                <TableRow
+                    android:id="@+id/tableLayout_Gyro_Graph"
+                    android:layout_weight="70"
+                    android:layout_width="match_parent">
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/chart_Gyro_Graph"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    </com.github.mikephil.charting.charts.LineChart>
+                </TableRow>
+            </TableLayout>
+
+        <TextView
+            android:id="@+id/textView_Sample"
+            android:layout_width="match_parent"
+            android:layout_height="30sp"
+            android:layout_margin="10sp"
+            android:gravity="center" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_Correct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Result Correct" />
+
+            <Button
+                android:id="@+id/button_Incorrect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Result Incorrect" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

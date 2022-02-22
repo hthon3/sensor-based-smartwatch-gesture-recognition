@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/mobile/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="1.0361111111111112" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/mobile/src/main/res/drawable/ic_launcher_background.xml" value="1.0361111111111112" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/mobile/src/main/res/layout/activity_data_collection.xml" value="0.4" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/mobile/src/main/res/layout/activity_gesture_testing.xml" value="0.2" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/mobile/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/mobile/src/main/res/layout/popup_window.xml" value="0.7075471698113207" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/drawable/ic_baseline_library_music.xml" value="1.4416666666666667" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/drawable/ic_baseline_library_music_24.xml" value="0.95" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/drawable/ic_baseline_search.xml" value="0.8805555555555555" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/drawable/ic_baseline_volume_up.xml" value="1.0361111111111112" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/drawable/ic_baseline_wb_sunny.xml" value="1.0361111111111112" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/drawable/ic_chat.xml" value="0.8861111111111111" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/drawable/ic_launcher_background.xml" value="0.4111111111111111" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/drawable/ic_launcher_gesture_background.xml" value="1.025" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/drawable/ic_library_music.xml" value="0.95" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/layout/activity_app_menu.xml" value="0.8" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/layout/activity_application_menu.xml" value="0.8800000000000001" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/layout/activity_application_navigation.xml" value="0.8800000000000001" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/layout/activity_chat_layout.xml" value="0.6" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/layout/activity_chat_menu.xml" value="0.8" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/layout/activity_chat_navigation.xml" value="0.8" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/layout/activity_data_collection.xml" value="0.7313019390581718" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/layout/activity_data_collection_menu.xml" value="0.7111111111111111" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/layout/activity_data_collector_navigation.xml" value="0.5950520833333334" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/layout/activity_input_panel.xml" value="0.7944444444444444" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/layout/activity_interaction.xml" value="0.4127604166666667" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/layout/activity_interaction_layout.xml" value="0.42657342657342656" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/layout/activity_main.xml" value="0.68359375" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/layout/activity_music_layout.xml" value="0.6278026905829597" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/layout/activity_music_menu.xml" value="0.8" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/layout/activity_music_navigation.xml" value="0.7241379310344828" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/layout/activity_test.xml" value="0.72" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/layout/app_item.xml" value="0.8722222222222222" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/layout/chat_box_item.xml" value="1.6" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/layout/chat_box_item_self.xml" value="1.1666666666666667" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/layout/chat_item.xml" value="0.1" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/layout/data_item.xml" value="1.2527777777777778" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/layout/list_item.xml" value="0.6" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/layout/menu_item.xml" value="1.3555555555555556" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/layout/menu_preview_item.xml" value="0.8800000000000001" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/layout/message_date.xml" value="0.8972222222222223" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/layout/message_other.xml" value="1.2125" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/layout/message_self.xml" value="1.2125" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/layout/music_item.xml" value="1.2527777777777778" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/layout/popup_icon.xml" value="0.7281553398058253" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/layout/view_item.xml" value="0.453125" />
+        <entry key="..\:/Android/AndroidStudioProjects/GestureInteraction/wear/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="1.0361111111111112" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

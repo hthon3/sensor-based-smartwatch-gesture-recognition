@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/menu_container"
+    android:layout_width="150dp"
+    android:layout_height="wrap_content"
+    android:paddingBottom="5dp"
+    android:layout_gravity="center"
+    android:paddingTop="5dp">
+
+    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        card_view:cardCornerRadius="18dp"
+        card_view:cardPreventCornerOverlap="false">
+
+        <ImageView
+            android:id="@+id/imageView_Icon"
+            android:layout_width="36dp"
+            android:layout_height="36dp" />
+    </androidx.cardview.widget.CardView>
+
+
+    <LinearLayout
+        android:id="@+id/layout_Container"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="45dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/textView_Name"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="7"
+                android:textColor="#607D8B"
+                android:textSize="14dp" />
+            <TextView
+                android:id="@+id/textView_Date"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:gravity="bottom"
+                android:textSize="8dp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView_Preview"
+            android:layout_width="match_parent"
+            android:layout_height="12dp"
+            android:textSize="8dp" />
+    </LinearLayout>
+
+
+</RelativeLayout>
