@@ -13,20 +13,21 @@ saved_model_dir = os.path.join(parent_dir, 'saved_model')
 TIME_STEP = 200
 
 def prechecking():
+    os.system('cls')
     if (os.path.exists(data_dir)):
-        print('Folder (dataset) exists in Folder (' + parent_dir +')')
+        print('Folder "dataset" exists in Folder "' + parent_dir +'"')
     else:
-        print('Folder (dataset) is missing in Folder (' + parent_dir +'). Please download the dataset folder from the github README.md')
+        print('Error: Folder "dataset" is missing in Folder "' + parent_dir +'". Please download the "dataset" folder from the link in github.')
         return False
     if (os.path.exists(result_data_dir)):
-        print('Folder (result_dataset) exists in Folder (' + data_dir +')')
+        print('Folder "result_dataset" exists in Folder "' + data_dir +'"')
     else:
-        print('Folder (result_dataset) is missing in Folder (' + data_dir +'). Please create the corresponding folder with the correct name.')
+        print('Error: Folder "result_dataset" is missing in Folder "' + data_dir +'". Please create the corresponding folder with the correct name.')
         return False
     if (os.path.exists(saved_model_dir)):
-        print('Folder (saved_model) exists in Folder (' + parent_dir +')')
+        print('Folder "saved_model" exists in Folder "' + parent_dir +'"')
     else:
-        print('Folder (saved_model) is missing in Folder (' + parent_dir +'). Please create the corresponding folder with the correct name.')
+        print('Error: Folder "saved_model" is missing in Folder "' + parent_dir +'". Please create the corresponding folder with the correct name.')
         return False
     return True
 
@@ -91,10 +92,10 @@ if prechecking():
                     break
         elif option == '3':
             while True:
-                data = input('Enter the name of the preprocessed data file in Folder (result_dataset): ')
-                file_dir = os.path.join(result_data_dir, data + ".csv")
+                data = input('Enter the name of the preprocessed csv file in Folder "result_dataset": ')
+                file_dir = os.path.join(result_data_dir, data + '.csv')
                 if not(os.path.exists(file_dir)):
-                    print ("File (" +  data + ".csv) is not found in Folder (" +  result_data_dir + ")")
+                    print ('Error: File "' +  data + '.csv" is not found in Folder "' +  result_data_dir + '"')
                     input('Press any key to continue...')
                     break
                 model_name = input('Enter the name of the model to be saved: ')
@@ -119,16 +120,16 @@ if prechecking():
                     break
         elif option == '4':
             while True:
-                model_name = input('Enter the name of the model in Folder (saved_model): ')
-                model_dir = os.path.join(saved_model_dir, model_name + ".h5")
+                model_name = input('Enter the name of the model in Folder "saved_model": ')
+                model_dir = os.path.join(saved_model_dir, model_name + '.h5')
                 if not(os.path.exists(model_dir)):
-                    print ("File (" +  model_name + ".h5) is not found in Folder (" +  saved_model_dir + ")")
+                    print ('Error: File "' +  model_name + '.h5" is not found in Folder "' +  saved_model_dir + '"')
                     input('Press any key to continue...')
                     break
-                data = input('Enter the name of the preprocessed data file in Folder (result_dataset): ')
-                file_dir = os.path.join(result_data_dir, data + ".csv")
+                data = input('Enter the name of the csv file in Folder "result_dataset": ')
+                file_dir = os.path.join(result_data_dir, data + '.csv')
                 if not(os.path.exists(file_dir)):
-                    print ("File (" +  data + ".csv) is not found in Folder (" +  result_data_dir + ")")
+                    print ('Error: File "' +  data + '.csv" is not found in Folder "' +  result_data_dir + '"')
                     input('Press any key to continue...')
                     break
                 option_1 = uiDisplay('Data Split Required', ['Leave-one-person-out cross-validation (Split the last users for testing)', 'Use all data for testing (Make sure the data was not used for training)'])
