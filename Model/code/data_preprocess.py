@@ -127,8 +127,8 @@ def data_preprocess(path, result_path, result_file_path, time_step, augment = Tr
                     li.append(df_3)
             counter = counter + 1
     frame = pd.concat(li, ignore_index=True)
-    print('Label Number: ' + str(frame['activity'].nunique()))
+    print('[INFO] Label Number: ' + str(frame['activity'].nunique()))
     for act in frame['activity'].unique():
         print(str(frame[frame['activity'] == act]['activity'].count() / time_step) + ' Samples (Gesture Label: ' + act + ')')
     frame.to_csv(result_file_path, header=False, index=False)
-    print('Preprocessed data are saved in ' + result_file_path + ' (Total samples: ' + str(frame.shape[0] / time_step) + ')')
+    print('[INFO] Preprocessed data are saved in ' + result_file_path + ' (Total samples: ' + str(frame.shape[0] / time_step) + ')')

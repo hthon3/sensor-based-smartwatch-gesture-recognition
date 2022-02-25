@@ -19,8 +19,8 @@ def read_data(file_path):
     return df
 
 def show_basic_dataframe_info(dataframe):
-    print('Number of columns in the dataframe: %i' % (dataframe.shape[1]))
-    print('Number of rows in the dataframe: %i\n' % (dataframe.shape[0]))
+    print('[INFO] Number of columns in the dataframe: %i' % (dataframe.shape[1]))
+    print('[INFO] Number of rows in the dataframe: %i\n' % (dataframe.shape[0]))
 
 def create_segments_and_labels(df, time_steps, label_name):
     all_segments = []
@@ -64,8 +64,8 @@ def data_initial(data_path, split = True):
 
 def model_creation(data_path, result_path, model_name, time_step, type = '2H'):
     #Parameter
-    tr_model_path = os.path.join(result_path, model_name + ".h5")
-    trl_model_path = os.path.join(result_path, model_name + ".tflite")
+    tr_model_path = os.path.join(result_path, model_name + '.h5')
+    trl_model_path = os.path.join(result_path, model_name + '.tflite')
     #Data Initial Stage
     df_train, df_test, LABELS = data_initial(data_path)
     x_train, x_train_a, x_train_g, y_train = create_segments_and_labels(df_train, time_step, LABEL)
@@ -92,17 +92,17 @@ def model_creation(data_path, result_path, model_name, time_step, type = '2H'):
             print('Training Data Shape: ' + str(x_train_a.shape))
             model = cnn_model_1h(input_shape, num_sensors, num_classes, time_step)
         else:
-            print('Training Data Shape: ' + str(x_train_a.shape) + " ," + str(x_train_a.shape))
+            print('Training Data Shape: ' + str(x_train_a.shape) + ' ,' + str(x_train_a.shape))
             model = cnn_model_2h(input_shape, num_sensors, num_classes, time_step)
 
     model.summary()
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
     callbacks=[ModelCheckpoint(filepath=tr_model_path, monitor='val_loss', save_best_only=True)]
-    if type == "1H":
+    if type == '1H':
         history = model.fit(x_train, y_train, batch_size = 32, epochs = 20, callbacks=callbacks, validation_split=0.2, verbose=1)
-    elif type == "1H-A":
+    elif type == '1H-A':
         history = model.fit(x_train_a, y_train, batch_size = 32, epochs = 20, callbacks=callbacks, validation_split=0.2, verbose=1)
-    elif type == "1H-G":
+    elif type == '1H-G':
         history = model.fit(x_train_g, y_train, batch_size = 32, epochs = 20, callbacks=callbacks, validation_split=0.2, verbose=1)
     else:
         history = model.fit([x_train_a, x_train_g], y_train, batch_size = 32, epochs = 20, callbacks=callbacks, validation_split=0.2, verbose=1)
@@ -112,4 +112,4 @@ def model_creation(data_path, result_path, model_name, time_step, type = '2H'):
     open(trl_model_path, 'wb').write(tflite_model)
 
     model_evaluation(tr_model_path, data_path, time_step, type)
-    print('Models are saved in ' + result_path)
+    print('[INFO] Models are saved in ' + result_path)

@@ -9,7 +9,7 @@ from sklearn import preprocessing
 from sklearn.metrics import classification_report
 from keras.utils import np_utils
 
-LABEL = "ActivityEncoded"
+LABEL = 'ActivityEncoded'
 le = preprocessing.LabelEncoder()
 
 def read_data(file_path):
@@ -61,17 +61,17 @@ def show_confusion_matrix(validations, predictions, size, LABELS):
     matrix = metrics.confusion_matrix(validations, predictions)
     plt.figure()
     sns.heatmap(matrix/size,
-                cmap="coolwarm",
+                cmap='coolwarm',
                 linecolor='white',
                 linewidths=1,
                 xticklabels=LABELS,
                 yticklabels=LABELS,
                 annot=True,
-                fmt=".0%")
-    plt.title("Gesture Confusion Matrix")
-    plt.ylabel("True Label")
+                fmt='.0%')
+    plt.title('Gesture Confusion Matrix')
+    plt.ylabel('True Label')
     plt.xticks(rotation=45)
-    plt.xlabel("Predicted Label")
+    plt.xlabel('Predicted Label')
     plt.subplots_adjust(left=0.125, bottom=0.2, right=1, top=0.95, wspace=0.2, hspace=0.2)
     plt.show()
 
@@ -87,8 +87,8 @@ def model_evaluation(model_path, data_path, time_step, type = '2H', split = True
         input_shape = num_time_periods*num_sensors
         x_test = x_test.reshape(x_test.shape[0], input_shape)
         x_test = x_test.astype('float32')
-        print('Label Shape: ' + str(y_test.shape))
-        print('Testing Data Shape: ' + str(x_test.shape))
+        print('[INFO] Label Shape: ' + str(y_test.shape))
+        print('[INFO] Testing Data Shape: ' + str(x_test.shape))
     else:
         num_time_periods, num_sensors = x_test_a.shape[1], x_test_a.shape[2]
         input_shape = num_time_periods*num_sensors
@@ -98,25 +98,25 @@ def model_evaluation(model_path, data_path, time_step, type = '2H', split = True
         x_test_g = x_test_g.astype('float32')
         print('Label Shape: ' + str(y_test.shape))
         if type == '1H-A' or type == '1H-G':
-            print('Testing Data Shape: ' + str(x_test_a.shape))
+            print('[INFO] Testing Data Shape: ' + str(x_test_a.shape))
         else:
-            print('Testing Data Shape: ' + str(x_test_a.shape) + " ," + str(x_test_a.shape))
+            print('[INFO] Testing Data Shape: ' + str(x_test_a.shape) + ' ,' + str(x_test_a.shape))
 
-    if type == "1H":
+    if type == '1H':
         score = model.evaluate(x_test, y_test, verbose=1)
         y_pred_test = model.predict(x_test)
-    elif type == "1H-A":
+    elif type == '1H-A':
         score = model.evaluate(x_test_a, y_test, verbose=1)
         y_pred_test = model.predict(x_test_a)        
-    elif type == "1H-G":
+    elif type == '1H-G':
         score = model.evaluate(x_test_g, y_test, verbose=1)
         y_pred_test = model.predict(x_test_g) 
     else:
         score = model.evaluate([x_test_a, x_test_g], y_test, verbose=1)
         y_pred_test = model.predict([x_test_a, x_test_g]) 
 
-    print('\nAccuracy on test data: %0.4f' % score[1])
-    print('\nLoss on test data: %0.4f' % score[0])
+    print('[INFO] Accuracy on test data: %0.4f' % score[1])
+    print('[INFO] Loss on test data: %0.4f' % score[0])
     max_y_pred_test = np.argmax(y_pred_test, axis=1)
     max_y_test = np.argmax(y_test, axis=1)
     show_confusion_matrix(max_y_test, max_y_pred_test, df_test.shape[0]/4200, LABELS)
