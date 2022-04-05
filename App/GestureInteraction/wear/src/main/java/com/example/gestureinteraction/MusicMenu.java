@@ -3,9 +3,12 @@ package com.example.gestureinteraction;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -28,29 +31,29 @@ public class MusicMenu extends GestureActivity{
     private ImageButton mImageButtonSearch;
     private MusicMenuAdapter adapter;
     private String keyword = "";
-    private ArrayList<MusicItem> songs = new ArrayList<MusicItem>();
-    private View v;
+    private ArrayList<MusicItem> listItems = new ArrayList<MusicItem>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMusicMenuBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        v = this.findViewById(android.R.id.content);
         mImageButtonSearch = binding.imageButtonSearch;
 
         recyclerView = binding.recyclerLauncherView;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        ArrayList<MusicItem> listItems = loadSong();
+        listItems = loadSong();
         adapter = new MusicMenuAdapter(this, listItems, new MusicMenuAdapter.AdapterCallback() {
             @Override
             public void onItemClicked(final Integer menuPosition) {
                 Intent intent = new Intent(MusicMenu.this, MusicLayout.class);
-                intent.putExtra("song_name", songs.get(menuPosition).getName());
+                intent.putExtra("song_name", listItems.get(menuPosition).getFileName());
                 startActivity(intent);
             }
         });
+        recyclerView.setAdapter(adapter);
+
         mImageButtonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,11 +63,10 @@ public class MusicMenu extends GestureActivity{
                 startActivityForResult(intent, 0);
             }
         });
-
-        recyclerView.setAdapter(adapter);
         updateUI("Null");
     }
     private ArrayList<MusicItem> loadSong(){
+        ArrayList<MusicItem> songs = new ArrayList<>();
         MediaMetadataRetriever mmr;
         String path = Environment.getExternalStorageDirectory().getPath() + File.separator + "GestInteraction" + File.separator + "music";
         try {
@@ -79,7 +81,7 @@ public class MusicMenu extends GestureActivity{
                     String time = String.format("%02d:%02d", (duration / 1000) / 60, (duration / 1000) % 60);
                     byte[] art = mmr.getEmbeddedPicture();
                     Bitmap songImage = BitmapFactory.decodeByteArray(art, 0, art.length);
-                    songs.add(new MusicItem(songImage, albumName, time));
+                    songs.add(new MusicItem(songImage, albumName, time, p));
                 }
                 songs.sort(Comparator.comparing(MusicItem::getName));
             } else {
@@ -94,31 +96,19 @@ public class MusicMenu extends GestureActivity{
     @Override
     public void updateUI(String result){
         switch (result){
-            case "Finger Snapping":
-                currFocus = adapter.focusNextItem();
-                if(currFocus != -1){
-                    recyclerView.smoothScrollToPosition(currFocus);
-                }
-                break;
-            case "Finger Waving":
+            case "Finger Flicking":
                 currFocus = adapter.focusPrevItem();
-                if(currFocus != -1){
-                    recyclerView.smoothScrollToPosition(currFocus);
-                }
+                break;
+            case "Hand Waving":
+                currFocus = adapter.focusNextItem();
                 break;
             case "Wrist Lifting":
                 currFocus = adapter.ScrollUp();
-                if (currFocus != -1){
-                    recyclerView.smoothScrollToPosition(currFocus);
-                }
                 break;
             case "Wrist Dropping":
                 currFocus = adapter.ScrollDown();
-                if (currFocus != -1){
-                    recyclerView.smoothScrollToPosition(currFocus+2);
-                }
                 break;
-            case "Finger Pinching":
+            case "Finger Snapping":
                 recyclerView.getChildAt(currFocus).callOnClick();
                 break;
             case "Knocking":
@@ -127,6 +117,10 @@ public class MusicMenu extends GestureActivity{
             case "Hand Rotation":
                 finish();
                 break;
+        }
+        if(currFocus != -1){
+            recyclerView.smoothScrollToPosition(currFocus);
+            recyclerView.requestFocus(currFocus);
         }
     }
 

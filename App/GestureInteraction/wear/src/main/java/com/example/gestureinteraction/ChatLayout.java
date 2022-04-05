@@ -38,14 +38,12 @@ public class ChatLayout extends GestureActivity {
     private String message = "";
     private ClipboardManager mClipboard;
     private String recordPath = Environment.getExternalStorageDirectory().getPath() + File.separator + "GestInteraction" + File.separator + "chat" + File.separator + "records";
-    private View v;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityChatLayoutBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        v = this.findViewById(android.R.id.content);
 
         mTextViewUser = binding.textViewUser;
         mImageButtonInput = binding.imageButtonInput;
@@ -77,8 +75,7 @@ public class ChatLayout extends GestureActivity {
         });
         recyclerView.setAdapter(adapter);
         currFocus = listItems.size() - 1;
-        if(currFocus < 0 ) currFocus = 0;
-        recyclerView.smoothScrollToPosition(currFocus);
+        if(currFocus < 0 ) currFocus = -1;
         updateUI("Null");
     }
 
@@ -105,37 +102,20 @@ public class ChatLayout extends GestureActivity {
     @Override
     public void updateUI(String result) {
         switch (result){
-            case "Finger Snapping":
-                currFocus = adapter.focusNextItem();
-                if(currFocus != -1){
-                    recyclerView.smoothScrollToPosition(currFocus);
-                }
-                break;
-            case "Finger Waving":
+            case "Finger Flicking":
                 currFocus = adapter.focusPrevItem();
-                if(currFocus != -1){
-                    recyclerView.smoothScrollToPosition(currFocus);
-                }
+                break;
+            case "Hand Waving":
+                currFocus = adapter.focusNextItem();
                 break;
             case "Wrist Lifting":
                 currFocus = adapter.ScrollUp();
-                if (currFocus != -1){
-                    if(listItems.get(currFocus-1).getSender().equals("")){
-                        recyclerView.smoothScrollToPosition(currFocus-1);
-                    } else {
-                        recyclerView.smoothScrollToPosition(currFocus);
-                    }
-                }
                 break;
             case "Wrist Dropping":
                 currFocus = adapter.ScrollDown();
-                if (currFocus != -1){
-                    recyclerView.smoothScrollToPosition(currFocus+2);
-                }
                 break;
-            case "Finger Squeezing":
-                if(currFocus != -1)
-                    recyclerView.findViewHolderForAdapterPosition(currFocus).itemView.callOnClick();
+            case "Hand Squeezing":
+                recyclerView.findViewHolderForAdapterPosition(currFocus).itemView.callOnClick();
                 break;
             case "Knocking":
                 mImageButtonInput.callOnClick();
@@ -146,6 +126,10 @@ public class ChatLayout extends GestureActivity {
                 setResult(RESULT_OK, intent);
                 finish();
                 break;
+        }
+        if(currFocus != -1){
+            recyclerView.smoothScrollToPosition(currFocus);
+            recyclerView.requestFocus(currFocus);
         }
     }
     @Override

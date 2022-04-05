@@ -11,7 +11,6 @@ def cnn_model_1h(input_shape, num_sensors, num_classes, time_step):
     model.add(MaxPool1D(2))
     model.add(Conv1D(64, 10, activation='relu'))
     model.add(MaxPool1D(2))
-    #model.add(Conv1D(128, 3, activation='relu'))
     model.add(GlobalAveragePooling1D())
     model.add(Dropout(0.5))
     model.add(Dense(num_classes, activation='softmax'))

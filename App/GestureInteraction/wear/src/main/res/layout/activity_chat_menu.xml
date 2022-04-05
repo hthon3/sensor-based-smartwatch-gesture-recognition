@@ -24,7 +24,7 @@
             android:layout_height="0dp"
             android:layout_weight="7"
             android:layout_marginHorizontal="20dp"
-            android:scrollbars="vertical"  />
+            android:scrollbars="none"  />
         <ImageButton
             android:id="@+id/imageButton_Add"
             style="?android:attr/buttonBarButtonStyle"

@@ -9,6 +9,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,11 +19,18 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
+import com.google.android.gms.wearable.Node;
+import com.google.android.gms.wearable.Wearable;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public abstract class GestureActivity extends Activity implements SensorEventListener {
     private SensorManager mSensorManager;
@@ -65,9 +73,15 @@ public abstract class GestureActivity extends Activity implements SensorEventLis
 
     public void dataHandling(){
         samplingStop();
-        String gestureResult = mClassifier.classification(getApplicationContext(), ax, ay, az, gx, gy, gz);
+        ArrayList<String> allData = new ArrayList<>();
+        for (int i = 0; i < Math.min(ax.size(), gx.size()); i++){
+            String data = ax.get(i) + "," + ay.get(i) + "," + az.get(i) + "," + gx.get(i) + "," + gy.get(i) + "," + gz.get(i) + "\n";
+            allData.add(data);
+        }
+        new SendThread("/sensor_data_classification", allData).start();
+        String result[] = mClassifier.classification(getApplicationContext(), ax, ay, az, gx, gy, gz).split(",");
         clearMemory();
-        updateUI(gestureResult);
+        updateUI(result[0]);
         samplingStart();
     }
 
@@ -204,5 +218,28 @@ public abstract class GestureActivity extends Activity implements SensorEventLis
         super.onPause();
         samplingStop();
         clearMemory();
+    }
+
+    private class SendThread extends Thread {
+        String path;
+        String message;
+        SendThread(String p, ArrayList<String> data) {
+            path = p;
+            message = "";
+            for (String s : data) { message += s; }
+        }
+        public void run() {
+            Task<List<Node>> nodeListTask = Wearable.getNodeClient(getApplicationContext()).getConnectedNodes();
+            try {
+                List<Node> nodes = Tasks.await(nodeListTask);
+                for (Node node : nodes) {
+                    Task<Integer> sendMessageTask = Wearable.getMessageClient(getApplicationContext()).sendMessage(node.getId(), path, message.getBytes());
+                    Integer result = Tasks.await(sendMessageTask);
+                    Log.v("Test", "Send data to " + node.getDisplayName());
+                }
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

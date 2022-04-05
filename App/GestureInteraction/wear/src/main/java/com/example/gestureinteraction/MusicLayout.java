@@ -85,30 +85,6 @@ public class MusicLayout extends GestureActivity{
             mTextViewDuration.setText(String.format("-%02d:%02d", (duration/1000)/60, (duration/1000)%60));
             mProgressBar.setMax(duration);
             mProgressBar.setProgress(0);
-            /*
-            mProgressBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                @Override
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
-                    int remainTime = duration - progress;
-                    int remainMin = (remainTime/1000)/60;
-                    int remainSec = (remainTime/1000)%60;
-                    mTextViewTime.setText(String.format("%02d:%02d", (progress/1000)/60, (progress/1000)%60));
-                    mTextViewDuration.setText(String.format("-%02d:%02d", remainMin, remainSec));
-                }
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {
-                    if(timer != null) timer.cancel();
-                }
-                @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {
-                    int remainTime = duration - seekBar.getProgress();
-                    if(timer != null){
-                        start(remainTime);
-                        mImageButtonControl.setImageResource(android.R.drawable.ic_media_pause);
-                        mImageButtonControl.setContentDescription("Pause");
-                    }
-                }
-            });*/
             mTextViewTitle.setText(albumName);
             mTextViewTitle.setTextColor(Color.CYAN);
             mImageViewArt.setImageBitmap(songImage);
@@ -133,12 +109,13 @@ public class MusicLayout extends GestureActivity{
                     mMediaPlayer.pause();
                     setPopupWindow(view, "Pause", android.R.drawable.ic_media_pause);
                 }
-
             }
         });
     }
 
     private void start(int timeStamp){
+        mImageButtonControl.setImageResource(android.R.drawable.ic_media_pause);
+        mImageButtonControl.setContentDescription("Pause");
         mMediaPlayer.seekTo(duration - timeStamp);
         mMediaPlayer.start();
         timer = new CountDownTimer(timeStamp, 1000) {
@@ -178,6 +155,7 @@ public class MusicLayout extends GestureActivity{
         title = items.get(pIndex);
         loadItem();
         setPopupWindow(v, "Previous Song", android.R.drawable.ic_media_previous);
+        start(duration);
     }
 
     private void nextSong(){
@@ -198,6 +176,7 @@ public class MusicLayout extends GestureActivity{
         title = items.get(nIndex);
         loadItem();
         setPopupWindow(v, "Next Song", android.R.drawable.ic_media_next);
+        start(duration);
     }
 
     private void turnUpVolume(){
@@ -236,7 +215,7 @@ public class MusicLayout extends GestureActivity{
         }
     }
 
-    private void rewind(){
+    private void backward(){
         if(timer != null){
             timer.cancel();
             int remainTime = duration - (int) mProgressBar.getProgress() + 5000;
@@ -244,7 +223,7 @@ public class MusicLayout extends GestureActivity{
             start(remainTime);
             mImageButtonControl.setImageResource(android.R.drawable.ic_media_pause);
             mImageButtonControl.setContentDescription("Pause");
-            setPopupWindow(v, "Rewind 5s", android.R.drawable.ic_media_rew);
+            setPopupWindow(v, "Backward 5s", android.R.drawable.ic_media_rew);
         }
     }
 
@@ -285,20 +264,20 @@ public class MusicLayout extends GestureActivity{
     @Override
     public void updateUI(String result) {
         switch (result){
-            case "Finger Pinching":
+            case "Knocking":
                 mImageButtonControl.callOnClick();
                 break;
             case "Wrist Lifting":
-                forward();
-                break;
-            case "Wrist Dropping":
-                rewind();
-                break;
-            case "CW Circling":
                 nextSong();
                 break;
-            case "CCW Circling":
+            case "Wrist Dropping":
                 prevSong();
+                break;
+            case "CW Circling":
+                forward();
+                break;
+            case "CCW Circling":
+                backward();
                 break;
             case "Hand Right Flipping":
                 turnUpVolume();

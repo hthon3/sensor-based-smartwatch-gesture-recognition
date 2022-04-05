@@ -9,7 +9,7 @@
         android:id="@+id/card_chat_message_self"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="#669AF5"
+        app:cardBackgroundColor="#4169E1"
         app:cardCornerRadius="12dp"
         app:cardElevation="0dp"
         app:cardPreventCornerOverlap="false"
@@ -33,7 +33,7 @@
                 android:paddingRight="12dp"
                 android:text="This is a Message"
                 android:textColor="#ffffff"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
     <TextView
@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:text="00:00"
         android:textColor="#C0C0C0"
-        android:textSize="8sp"
+        android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="@+id/card_chat_message_self"
         app:layout_constraintEnd_toStartOf="@+id/card_chat_message_self" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -35,7 +35,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         this.dataSource = dataArgs;
         this.callback = callback;
         currFocus = dataSource.size() - 1;
-        if(currFocus < 0 ) currFocus = 0;
+        if( currFocus <= 0 ) currFocus = -1;
     }
 
     @NonNull
@@ -88,9 +88,6 @@ public class MessageListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             case VIEW_TYPE_MESSAGE_DATE:
                 ((DateMessageHolder) holder).bind(message);
                 ((DateMessageHolder) holder).messageContainer.setOnClickListener(listener);
-                if(position == currFocus) {
-                    currFocus += 1;
-                }
                 break;
         }
     }
@@ -158,42 +155,49 @@ public class MessageListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public int focusPrevItem(){
         if(dataSource.size() == 0) return -1;
         currFocus -= 1;
+        if(currFocus < 1) currFocus = dataSource.size() - 1;
         if(dataSource.get(currFocus).getSender().equals("")) currFocus -= 1;
-        if(currFocus < 0) currFocus = dataSource.size() - 1;
         notifyDataSetChanged();
         return currFocus;
     }
     public int focusNextItem(){
         if(dataSource.size() == 0) return -1;
         currFocus += 1;
-        if(dataSource.get(currFocus).getSender().equals("")) currFocus +=1;
         if(currFocus > dataSource.size() - 1) currFocus = 1;
+        if(dataSource.get(currFocus).getSender().equals("")) currFocus +=1;
         notifyDataSetChanged();
         return currFocus;
     }
     public int ScrollUp(){
-        if(dataSource.size() == 0) return -1;
-        if(currFocus - 4 >= 0)
-            if (currFocus - 5 < 0){
-                currFocus -= 2;
+        if(dataSource.size() == 0)
+            currFocus = -1;
+        else{
+            if(currFocus - 1 < 1){
+                currFocus = 1;
             } else {
-                currFocus -= 4;
+                if(dataSource.get(currFocus - 1).getSender().equals("")){
+                    currFocus -= 2;
+                } else {
+                    while(currFocus > 1 && !dataSource.get(currFocus-1).getSender().equals("")) currFocus -= 1;
+                }
             }
-        else
-            currFocus = 1;
-        if(dataSource.get(currFocus).getSender().equals("")) currFocus +=1;
+        }
         notifyDataSetChanged();
         return currFocus;
     }
     public int ScrollDown(){
-        if(dataSource.size() == 0) return -1;
-        if(currFocus + 4 <= dataSource.size() - 1)
-            if (currFocus + 5 > dataSource.size() - 1){
-                currFocus += 2;
+        if(dataSource.size() == 0)
+            currFocus = -1;
+        else
+            if(currFocus + 1 > dataSource.size() - 1){
+                currFocus = dataSource.size() - 1;
             } else {
-                currFocus += 4;
+                if(dataSource.get(currFocus + 1).getSender().equals("")){
+                    currFocus += 2;
+                } else {
+                    while(currFocus < dataSource.size() - 1 && !dataSource.get(currFocus+1).getSender().equals("")) currFocus += 1;
+                }
             }
-        if(dataSource.get(currFocus).getSender().equals("")) currFocus +=1;
         notifyDataSetChanged();
         return currFocus;
     }

@@ -58,8 +58,8 @@ public class DataCollection extends AppCompatActivity {
         setContentView(activity_data_collection);
         mLineChartAccel = findViewById(R.id.chart_Accel_Graph);
         mLineChartGyro = findViewById(R.id.chart_Gyro_Graph);
-        initialChart(mLineChartAccel, -20, 20);
-        initialChart(mLineChartGyro, -10, 10);
+        initialChart(mLineChartAccel);
+        initialChart(mLineChartGyro);
         mSpinnerGesture = findViewById(R.id.spinner_Gesture);
         mTextViewCounter = findViewById(R.id.textView_Counter);
         mTextViewSample = findViewById(R.id.textView_Sample);
@@ -166,39 +166,55 @@ public class DataCollection extends AppCompatActivity {
         mButtonDiscard.setEnabled(false);
     }
 
-    private void initialChart(LineChart chart, int sy, int ey){
+    private void initialChart(LineChart chart){
         chart.getDescription().setEnabled(false);
         chart.setTouchEnabled(false);
         chart.setDragEnabled(false);
         XAxis xa = chart.getXAxis();
-        YAxis ya = chart.getAxisLeft();
         YAxis rightYAxis = chart.getAxisRight();
         xa.setAxisMinimum(0);
         xa.setAxisMaximum(200);
-        ya.setAxisMinimum(sy);
-        ya.setAxisMaximum(ey);
         rightYAxis.setEnabled(false);
 
+    }
+
+    private void setChartSize(LineChart chart, float sy, float ey){
+        int s = (int) (sy + 1f);
+        int l = (int) (ey + 1f);
+        if(sy < 0) s = (int) (sy - 1f);
+        if(ey < 0) l = (int) (ey - 1f);
+        YAxis ya = chart.getAxisLeft();
+        ya.setAxisMinimum(s);
+        ya.setAxisMaximum(l);
     }
 
     private void updateCharts(){
         int sampleNumber = dataList.size();
         boolean notValid = sampleNumber < 200;
-        if (sampleNumber != 0){
-            ArrayList<Entry> ax = new ArrayList<>(), ay = new ArrayList<>(), az = new ArrayList<>(),
-                    gx = new ArrayList<>(), gy = new ArrayList<>(), gz = new ArrayList<>();
-            for (int i = 0; i < sampleNumber;i++){
-                String[] data = dataList.get(i).split(",");
-                ax.add(new Entry(i, Float.parseFloat(data[0])));
-                ay.add(new Entry(i, Float.parseFloat(data[1])));
-                az.add(new Entry(i, Float.parseFloat(data[2])));
-                gx.add(new Entry(i, Float.parseFloat(data[3])));
-                gy.add(new Entry(i, Float.parseFloat(data[4])));
-                gz.add(new Entry(i, Float.parseFloat(data[5])));
-            }
-            setChartData(mLineChartAccel, ax, ay, az, "Accel x", "Accel y", "Accel z");
-            setChartData(mLineChartGyro, gx, gy, gz, "Gyro x", "Gyro y", "Gyro z");
+        float minA = 0f, maxA = 0f, minG = 0f, maxG = 0f;
+        ArrayList<Entry> ax = new ArrayList<>(), ay = new ArrayList<>(), az = new ArrayList<>(),
+                gx = new ArrayList<>(), gy = new ArrayList<>(), gz = new ArrayList<>();
+        for (int i = 0; i < sampleNumber;i++){
+            String[] data = dataList.get(i).split(",");
+            ax.add(new Entry(i, Float.parseFloat(data[0])));
+            ay.add(new Entry(i, Float.parseFloat(data[1])));
+            az.add(new Entry(i, Float.parseFloat(data[2])));
+            gx.add(new Entry(i, Float.parseFloat(data[3])));
+            gy.add(new Entry(i, Float.parseFloat(data[4])));
+            gz.add(new Entry(i, Float.parseFloat(data[5])));
+            float max1 = Math.max(Math.max(Float.parseFloat(data[0]), Float.parseFloat(data[1])), Float.parseFloat(data[2]));
+            float min1 = Math.min(Math.min(Float.parseFloat(data[0]), Float.parseFloat(data[1])), Float.parseFloat(data[2]));
+            float max2 = Math.max(Math.max(Float.parseFloat(data[3]), Float.parseFloat(data[4])), Float.parseFloat(data[5]));
+            float min2 = Math.min(Math.min(Float.parseFloat(data[3]), Float.parseFloat(data[4])), Float.parseFloat(data[5]));
+            if(max1 > maxA) maxA = max1;
+            if(min1 < minA) minA = min1;
+            if(max2 > maxG) maxG = max2;
+            if(min2 < minG) minG = min2;
         }
+        setChartSize(mLineChartAccel, minA , maxA);
+        setChartSize(mLineChartGyro, minG, maxG);
+        setChartData(mLineChartAccel, ax, ay, az, "Accel x", "Accel y", "Accel z");
+        setChartData(mLineChartGyro, gx, gy, gz, "Gyro x", "Gyro y", "Gyro z");
         if(notValid) {
             mTextViewSample.setTextColor(Color.RED);
             mTextViewAccel.setTextColor(Color.RED);

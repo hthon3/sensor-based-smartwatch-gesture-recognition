@@ -36,7 +36,6 @@ public class ChatMenu extends GestureActivity{
     private ArrayList<ChatItem> menuItems;
     private String iconPath = Environment.getExternalStorageDirectory().getPath() + File.separator + "GestInteraction" + File.separator + "chat" + File.separator + "icons";
     private String recordPath = Environment.getExternalStorageDirectory().getPath() + File.separator + "GestInteraction" + File.separator + "chat" + File.separator + "records";
-    private View v;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +43,6 @@ public class ChatMenu extends GestureActivity{
         binding = ActivityChatMenuBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         mImageButtonAdd = binding.imageButtonAdd;
-        v = this.findViewById(android.R.id.content);
 
         recyclerView = binding.recyclerLauncherView;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -126,30 +124,18 @@ public class ChatMenu extends GestureActivity{
     @Override
     public void updateUI(String result) {
         switch (result){
-            case "Finger Snapping":
-                currFocus = adapter.focusNextItem();
-                if(currFocus != -1){
-                    recyclerView.smoothScrollToPosition(currFocus);
-                }
-                break;
-            case "Finger Waving":
+            case "Finger Flicking":
                 currFocus = adapter.focusPrevItem();
-                if(currFocus != -1){
-                    recyclerView.smoothScrollToPosition(currFocus);
-                }
+                break;
+            case "Hand Waving":
+                currFocus = adapter.focusNextItem();
                 break;
             case "Wrist Lifting":
                 currFocus = adapter.ScrollUp();
-                if (currFocus != -1){
-                    recyclerView.smoothScrollToPosition(currFocus);
-                }
                 break;
             case "Wrist Dropping":
                 currFocus = adapter.ScrollDown();
-                if (currFocus != -1){
-                    recyclerView.smoothScrollToPosition(currFocus+2);
-                }
-            case "Finger Pinching":
+            case "Finger Snapping":
                 recyclerView.getChildAt(currFocus).callOnClick();
                 break;
             case "Knocking":
@@ -158,6 +144,10 @@ public class ChatMenu extends GestureActivity{
             case "Hand Rotation":
                 finish();
                 break;
+        }
+        if(currFocus != -1){
+            recyclerView.smoothScrollToPosition(currFocus);
+            recyclerView.requestFocus(currFocus);
         }
     }
 

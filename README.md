@@ -1,5 +1,5 @@
 # Sensor based Smartwatch gesture recognition
-Repository containing the code for the final year project: "Gestures-based Touch-Free smartwatch development with deep learning"
+Repository containing the code for the final year project: "Gestures-based smartwatch interaction with deep learning"
 
 The goal of this project is to classify different scales of single-hand gestures, including finger motions and finger writing on a smartwatch based on the IMU data with deep learning. Our classifier distinguishes 20 gestures.
 
@@ -10,13 +10,10 @@ The raw dataset can be downloaded from [here](https://portland-my.sharepoint.com
 The entire `dataset` folder need to be placed inside the `Model` folder.
 
 ## Application Instances
-This project built different real-life applications around our classification system for smartwatch control.
+This project built different real-life applications around our classification system for smartwatch control. The following Youtube video demonstrates the gestural system and the application instances.
  
-### Music Player Application
-![musicPlayer.png](Images/musicPlayer.png)
 
-### Conversational Application
-![message.png](Images/message.png)
+![demo.png(Images/Project_Screenshot.png] (https://youtu.be/FyyXiZeToME)
 
 
 ## Gathering your own data

@@ -9,9 +9,10 @@
         android:id="@+id/imageView_AppIcon"
         android:layout_width="36dp"
         android:layout_height="36dp" />
+
     <TextView
         android:id="@+id/textView_AppName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="36dp"
         android:layout_centerVertical="true"
         android:paddingLeft="45dp"

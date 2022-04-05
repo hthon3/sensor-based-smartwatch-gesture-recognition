@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -41,13 +42,13 @@ public class MusicMenuAdapter extends RecyclerView.Adapter<MusicMenuAdapter.Recy
     }
 
     public static class RecyclerViewHolder extends RecyclerView.ViewHolder {
-        LinearLayout menuContainer;
+        RelativeLayout menuContainer;
         TextView menuItem, menuPreview, menuDate;
         ImageView menuImage;
 
         public RecyclerViewHolder(View view) {
             super(view);
-            menuContainer = view.findViewById(R.id.layout_Container);
+            menuContainer = view.findViewById(R.id.menu_preview_container);
             menuItem = view.findViewById(R.id.textView_Name);
             menuImage = view.findViewById(R.id.imageView_Icon);
             menuPreview = view.findViewById(R.id.textView_Preview);
@@ -101,15 +102,8 @@ public class MusicMenuAdapter extends RecyclerView.Adapter<MusicMenuAdapter.Recy
     public int ScrollUp(){
         if(dataSource.size() == 0)
             return -1;
-        if(currFocus - 3 >= 0)
-            if (currFocus - 4 < 0){
-                currFocus -= 1;
-            } else if (currFocus - 5 < 0) {
-                currFocus -= 2;
-            } else {
-                currFocus -= 3;
-            }
-        else
+        currFocus -= 2;
+        if(currFocus < 0)
             currFocus = 0;
         notifyDataSetChanged();
         return currFocus;
@@ -117,15 +111,9 @@ public class MusicMenuAdapter extends RecyclerView.Adapter<MusicMenuAdapter.Recy
     public int ScrollDown(){
         if(dataSource.size() == 0)
             return -1;
-        if(currFocus + 3 <= dataSource.size() - 1)
-            if (currFocus + 4 > dataSource.size() - 1){
-                currFocus += 1;
-            } else if (currFocus + 5 > dataSource.size() - 1) {
-                currFocus += 2;
-            } else {
-                currFocus += 3;
-            }
-        notifyDataSetChanged();
+        currFocus += 2;
+        if(currFocus > dataSource.size() - 1)
+            currFocus = dataSource.size() - 1;
         return currFocus;
     }
 
@@ -151,11 +139,13 @@ class MusicItem{
     private Bitmap icon;
     private String name;
     private String preview;
+    private String fileName;
 
-    public MusicItem(Bitmap icon, String name, String preview) {
+    public MusicItem(Bitmap icon, String name, String preview, String fileName) {
         this.icon = icon;
         this.name = name;
         this.preview = preview;
+        this.fileName = fileName;
     }
 
     public String getName() {
@@ -167,4 +157,6 @@ class MusicItem{
     }
 
     public String getPreview() {return preview;}
+
+    public String getFileName() {return fileName;}
 }

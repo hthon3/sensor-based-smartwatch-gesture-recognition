@@ -62,7 +62,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Linear Acceleration Data Preview" />
+                    android:text="Accelerometer Data Preview" />
             </TableRow>
             <TableRow
                 android:id="@+id/tableLayout_Accel_Graph"

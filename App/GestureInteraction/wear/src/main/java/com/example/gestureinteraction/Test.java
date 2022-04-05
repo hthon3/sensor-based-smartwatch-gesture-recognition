@@ -54,56 +54,8 @@ public class Test extends GestureActivity {
             }
         }
     }
-
-    @Override
-    public void dataHandling(){
-        samplingStop();
-        sendData();
-        clearMemory();
-        samplingStart();
-    }
-
     @Override
     public void updateUI(String result) {
 
-    }
-
-    private ArrayList<String> recordData(){
-        ArrayList<String> allData = new ArrayList<>();
-        for (int i = 0; i < Math.min(ax.size(), gx.size()); i++){
-            String data = ax.get(i) + "," + ay.get(i) + "," + az.get(i) + "," + gx.get(i) + "," + gy.get(i) + "," + gz.get(i) + "\n";
-            allData.add(data);
-        }
-        clearMemory();
-        return allData;
-    }
-
-    public void sendData() {
-        ArrayList<String> allData = recordData();
-        new SendThread("/sensor_data_classification", allData).start();
-        clearMemory();
-    }
-
-    private class SendThread extends Thread {
-        String path;
-        String message;
-        SendThread(String p, ArrayList<String> data) {
-            path = p;
-            message = "";
-            for (String s : data) { message += s; }
-        }
-        public void run() {
-            Task<List<Node>> nodeListTask = Wearable.getNodeClient(getApplicationContext()).getConnectedNodes();
-            try {
-                List<Node> nodes = Tasks.await(nodeListTask);
-                for (Node node : nodes) {
-                    Task<Integer> sendMessageTask = Wearable.getMessageClient(getApplicationContext()).sendMessage(node.getId(), path, message.getBytes());
-                    Integer result = Tasks.await(sendMessageTask);
-                    Log.v("Test", "Send data to " + node.getDisplayName());
-                }
-            } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
     }
 }

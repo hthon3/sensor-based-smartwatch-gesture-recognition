@@ -70,19 +70,19 @@ public class InputPanel extends GestureActivity {
     @Override
     public void updateUI(String result) {
         switch (result){
-            case "Drawing Letter A":
+            case "Draw Letter A":
                 inputContent += "A";
                 break;
-            case "Drawing Letter B":
+            case "Draw Letter B":
                 inputContent += "B";
                 break;
-            case "Drawing Letter C":
+            case "Draw Letter C":
                 inputContent += "C";
                 break;
-            case "Drawing Letter D":
+            case "Draw Letter D":
                 inputContent += "D";
                 break;
-            case "Drawing Letter E":
+            case "Draw Letter E":
                 inputContent += "E";
                 break;
             case "Finger Rubbing":
@@ -92,12 +92,12 @@ public class InputPanel extends GestureActivity {
                 Toast.makeText(getApplicationContext(), "Clear", Toast.LENGTH_SHORT).show();
                 inputContent = "";
                 break;
-            case "Finger Squeezing":
+            case "Hand Squeezing":
                 Toast.makeText(getApplicationContext(), "Copy", Toast.LENGTH_SHORT).show();
                 ClipData clipData = ClipData.newPlainText("message", inputContent);
                 mClipboard.setPrimaryClip(clipData);
                 break;
-            case "Finger Flicking":
+            case "Finger Pinching":
                 Toast.makeText(getApplicationContext(), "Paste", Toast.LENGTH_SHORT).show();
                 String pasteData = "";
                 if (mClipboard.hasPrimaryClip()) {
@@ -105,10 +105,10 @@ public class InputPanel extends GestureActivity {
                     pasteData = item.getText().toString();
                 }
                 if(pasteData != ""){
-                    inputContent += pasteData;
+                    inputContent += " " + pasteData;
                 }
                 break;
-            case "Knocking":
+            case "Finger Snapping":
                 mImageButtonReturn.callOnClick();
                 break;
             case "Hand Rotation":
@@ -120,9 +120,10 @@ public class InputPanel extends GestureActivity {
                 break;
         }
         if(inputContent != ""){
-            mEditTextInput.setText(inputContent);
+            mEditTextInput.setText("");
+            mEditTextInput.append(inputContent);
         } else {
-            mEditTextInput.setText(inputContent);
+            mEditTextInput.setText("");
             mEditTextInput.setHint(hint);
         }
     }

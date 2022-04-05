@@ -68,6 +68,7 @@ public class AppMenuAdapter extends RecyclerView.Adapter<AppMenuAdapter.Recycler
             holder.menuContainer.setBackgroundColor(Color.TRANSPARENT);
         }
     }
+
     public int focusPrevItem(){
         if(dataSource.size() == 0)
             return -1;
@@ -86,9 +87,19 @@ public class AppMenuAdapter extends RecyclerView.Adapter<AppMenuAdapter.Recycler
         notifyDataSetChanged();
         return currFocus;
     }
-    public void clearFocus(){
-        currFocus = -1;
+    public int ScrollUp(){
+        if(dataSource.size() == 0)
+            return -1;
+        currFocus = 0;
         notifyDataSetChanged();
+        return currFocus;
+    }
+    public int ScrollDown(){
+        if(dataSource.size() == 0)
+            return -1;
+        currFocus = dataSource.size() - 1;
+        notifyDataSetChanged();
+        return currFocus;
     }
 
     @Override

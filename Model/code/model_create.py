@@ -99,13 +99,13 @@ def model_creation(data_path, result_path, model_name, time_step, type = '2H'):
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
     callbacks=[ModelCheckpoint(filepath=tr_model_path, monitor='val_loss', save_best_only=True)]
     if type == '1H':
-        history = model.fit(x_train, y_train, batch_size = 32, epochs = 20, callbacks=callbacks, validation_split=0.2, verbose=1)
+        history = model.fit(x_train, y_train, batch_size = 32, epochs = 10, callbacks=callbacks, validation_split=0.2, verbose=1)
     elif type == '1H-A':
-        history = model.fit(x_train_a, y_train, batch_size = 32, epochs = 20, callbacks=callbacks, validation_split=0.2, verbose=1)
+        history = model.fit(x_train_a, y_train, batch_size = 32, epochs = 10, callbacks=callbacks, validation_split=0.2, verbose=1)
     elif type == '1H-G':
-        history = model.fit(x_train_g, y_train, batch_size = 32, epochs = 20, callbacks=callbacks, validation_split=0.2, verbose=1)
+        history = model.fit(x_train_g, y_train, batch_size = 32, epochs = 10, callbacks=callbacks, validation_split=0.2, verbose=1)
     else:
-        history = model.fit([x_train_a, x_train_g], y_train, batch_size = 32, epochs = 20, callbacks=callbacks, validation_split=0.2, verbose=1)
+        history = model.fit([x_train_a, x_train_g], y_train, batch_size = 32, epochs = 10, callbacks=callbacks, validation_split=0.2, verbose=1)
     model = tf.keras.models.load_model(tr_model_path)
     converter = tf.lite.TFLiteConverter.from_keras_model(model)
     tflite_model = converter.convert()
