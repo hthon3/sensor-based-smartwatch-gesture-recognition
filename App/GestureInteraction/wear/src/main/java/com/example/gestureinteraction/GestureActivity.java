@@ -145,6 +145,18 @@ public abstract class GestureActivity extends Activity implements SensorEventLis
         } else {
             if (ax.size() >= 200 && gx.size() >= 200){
                 dataHandling();
+            } else if (ax.size() >= 100 && gx.size() >= 100){
+                List<Float> l_ax = ax.subList(ax.size()-30, ax.size());
+                List<Float> l_ay = ay.subList(ay.size()-30, ay.size());
+                List<Float> l_az = az.subList(az.size()-30, az.size());
+                List<Float> l_gx = gx.subList(gx.size()-30, gx.size());
+                List<Float> l_gy = gy.subList(gy.size()-30, gy.size());
+                List<Float> l_gz = gz.subList(gz.size()-30, gz.size());
+                if(isMoveStop(l_ax) && isMoveStop(l_ay) && isMoveStop(l_az) && isMoveStop(l_gx) && isMoveStop(l_gy) && isMoveStop(l_gz)){
+                    ax = backPadding(ax);ay = backPadding(ay);az = backPadding(az);
+                    gx = backPadding(gx);gy = backPadding(gy);gz = backPadding(gz);
+                    dataHandling();
+                }
             }
         }
     }
@@ -153,23 +165,58 @@ public abstract class GestureActivity extends Activity implements SensorEventLis
         if (data.isEmpty()){
             return false;
         } else {
-            float sum = 0f;
-            for (Float d : data){
-                sum += d;
-            }
-            float avg = sum / (float) data.size();
-            if (avg >= data.get(0) + threshold || avg <= data.get(0) - threshold){
+            if (std(data) >= threshold){
                 return true;
             } else {
                 return false;
             }
         }
     }
+
+    public boolean isMoveStop(List<Float> data){
+        if (data.isEmpty()){
+            return false;
+        } else {
+            if (std(data) < 0.2){
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    public float std(List<Float> data){
+        if (data.isEmpty()){
+            return 0;
+        } else {
+            float sum = 0f;
+            for (Float d : data){
+                sum += d;
+            }
+            float avg = sum / (float) data.size();
+            sum = 0f;
+            for(Float d : data) {
+                sum += Math.pow((d-avg),2);
+
+            }
+            float var = sum / (float) data.size();
+            return (float) Math.sqrt(var);
+        }
+    }
+
     public List<Float> topPadding(List<Float> data){
         List<Float> newData = new ArrayList<>(data);
         Float pad = data.get(0);
         for (int i = 0; i < 10; i++){
             newData.add(0, pad);
+        }
+        return newData;
+    }
+    public List<Float> backPadding(List<Float> data){
+        List<Float> newData = new ArrayList<>(data);
+        Float pad = data.get(data.size()-1);
+        for (int i = data.size()-1; i < 199; i++){
+            newData.add(pad);
         }
         return newData;
     }

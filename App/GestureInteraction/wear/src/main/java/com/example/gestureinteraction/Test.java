@@ -51,6 +51,18 @@ public class Test extends GestureActivity {
         } else {
             if (ax.size() >= 200 && gx.size() >= 200){
                 dataHandling();
+            } else if (ax.size() >= 100 && gx.size() >= 100){
+                List<Float> l_ax = ax.subList(ax.size()-30, ax.size());
+                List<Float> l_ay = ay.subList(ay.size()-30, ay.size());
+                List<Float> l_az = az.subList(az.size()-30, az.size());
+                List<Float> l_gx = gx.subList(gx.size()-30, gx.size());
+                List<Float> l_gy = gy.subList(gy.size()-30, gy.size());
+                List<Float> l_gz = gz.subList(gz.size()-30, gz.size());
+                if(isMoveStop(l_ax) && isMoveStop(l_ay) && isMoveStop(l_az) && isMoveStop(l_gx) && isMoveStop(l_gy) && isMoveStop(l_gz)){
+                    ax = backPadding(ax);ay = backPadding(ay);az = backPadding(az);
+                    gx = backPadding(gx);gy = backPadding(gy);gz = backPadding(gz);
+                    dataHandling();
+                }
             }
         }
     }
